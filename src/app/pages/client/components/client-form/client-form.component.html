@@ -1,4 +1,4 @@
-<form [formGroup]="formClient">
+<ng-container [formGroup]="formClient">
   <mat-form-field>
     <mat-label>Nome</mat-label>
     <input matInput formControlName="name" />
@@ -9,7 +9,7 @@
 
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input matInput formControlName="email" />
+    <input matInput formControlName="email" type="email" />
     @if (formClient.get('email')?.hasError('required')) {
     <mat-error>Campo obrigatório</mat-error>
     } @if (formClient.get('email')?.hasError('email')) {
@@ -39,11 +39,14 @@
     <input
       matInput
       formControlName="telefone"
+      type="tel"
       mask="(00) 00000-0000"
       [dropSpecialCharacters]="true"
     />
     @if (formClient.get('telefone')?.hasError('required')) {
     <mat-error>Campo obrigatório</mat-error>
+    } @if (formClient.get('telefone')?.hasError('pattern')) {
+    <mat-error>Deve ter 11 dígitos</mat-error>
     }
   </mat-form-field>
-</form>
+</ng-container>

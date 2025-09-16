@@ -1,26 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { HeaderComponent } from '../../components/header/header.component';
-import { ClientService } from '../../services/client.service';
+import { ClientService } from '../../services/client/client.service';
 import { Client } from '../../interfaces/client.interface';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { ClientFormComponent } from './components/client-form/client-form.component';
 import { ClientModalComponent } from './components/client-modal/client-modal.component';
 import { DatePipe } from '@angular/common';
-import { FormattedCpfPipe } from '../../pipes/formatted-cpf.pipe';
-import { FormattedPhonePipe } from '../../pipes/formatted-phone.pipe';
+import { FormattedCpfPipe } from '../../pipes/formatted-cpf/formatted-cpf.pipe';
+import { FormattedPhonePipe } from '../../pipes/formatted-phone/formatted-phone.pipe';
 
 @Component({
   selector: 'app-client',
   imports: [
-    HeaderComponent,
     MatIcon,
     MatButtonModule,
     MatTableModule,
@@ -28,7 +22,7 @@ import { FormattedPhonePipe } from '../../pipes/formatted-phone.pipe';
     MatMenuModule,
     DatePipe,
     FormattedCpfPipe,
-    FormattedPhonePipe
+    FormattedPhonePipe,
   ],
   templateUrl: './client.component.html',
   styleUrl: './client.component.scss',
@@ -36,6 +30,7 @@ import { FormattedPhonePipe } from '../../pipes/formatted-phone.pipe';
 export class ClientComponent implements OnInit {
   private _client = inject(ClientService);
   private _dialog = inject(MatDialog);
+
   /**
    * Colunas exibidas na tabela de clientes.
    * @type {string[]}
@@ -48,17 +43,20 @@ export class ClientComponent implements OnInit {
     'data',
     'editar',
   ];
+
   /**
    * Fonte de dados da tabela, baseada na lista de clientes.
    * @type {MatTableDataSource<Client>}
    */
   dataSource!: MatTableDataSource<Client>;
+
   /**
    * Inicializa a tabela carregando os clientes.
    */
   ngOnInit() {
     this.getClients();
   }
+
   /**
    * Busca todos os clientes da API e atualiza a fonte de dados da tabela.
    */
@@ -67,6 +65,7 @@ export class ClientComponent implements OnInit {
       this.dataSource = new MatTableDataSource(data);
     });
   }
+
   /**
    * Exclui um cliente pelo ID e atualiza a lista após a exclusão.
    * @param {number} id - O ID do cliente a ser excluído.
@@ -77,6 +76,7 @@ export class ClientComponent implements OnInit {
       this.getClients();
     });
   }
+
   /**
    * Abre o modal para adicionar ou editar um cliente.
    * Após o fechamento do modal, atualiza a lista de clientes.

@@ -1,19 +1,30 @@
-header{
-    width: 100%;
-    height: 56px;
-    background: #3f51b5;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
+header {
+  width: 100%;
+  height: 56px;
+  background: #3f51b5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
 }
 
-h3{
+h3 {
   margin: 0;
   color: #fff;
   font-size: 18px;
 }
 
-img{
+img {
   width: 70px;
+}
+
+.button-menu {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #fff;
 }

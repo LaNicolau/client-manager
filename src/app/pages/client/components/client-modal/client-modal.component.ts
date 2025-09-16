@@ -6,7 +6,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { ClientFormComponent } from '../client-form/client-form.component';
-import { ClientService } from '../../../../services/client.service';
+import { ClientService } from '../../../../services/client/client.service';
 import { Dialog } from '@angular/cdk/dialog';
 import { Client } from '../../../../interfaces/client.interface';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,10 +26,12 @@ import { MatButtonModule } from '@angular/material/button';
 export class ClientModalComponent {
   private _client = inject(ClientService);
   private _dialog = inject(Dialog);
+
   /**
    * Referência ao componente de formulário de cliente dentro do modal.
    */
   @ViewChild(ClientFormComponent) clientFormComponent!: ClientFormComponent;
+
   /**
    * Injeta os dados recebidos pelo modal, contendo o cliente e o modo de operação.
    * @param {{ dataClient: Client; mode: string }} data - Dados passados para o modal.
@@ -37,6 +39,7 @@ export class ClientModalComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { dataClient: Client; mode: string }
   ) {}
+
   /**
    * Salva os dados do formulário.
    * Se o formulário for válido, realiza a operação de cadastro ou atualização
@@ -63,6 +66,7 @@ export class ClientModalComponent {
       this.clientFormComponent.formClient.markAllAsTouched();
     }
   }
+
   /**
    * Fecha o formulário.
    * Se houver alterações não salvas, solicita confirmação do usuário antes de fechar.

@@ -19,7 +19,7 @@ import {
 import { MatFormField, MatInputModule } from '@angular/material/input';
 import { Client } from '../../../../interfaces/client.interface';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-import { ClientService } from '../../../../services/client.service';
+import { ClientService } from '../../../../services/client/client.service';
 import { Observable, of, map } from 'rxjs';
 
 @Component({
@@ -38,15 +38,18 @@ import { Observable, of, map } from 'rxjs';
 export class ClientFormComponent implements OnInit {
   private _fb = inject(FormBuilder);
   private _client = inject(ClientService);
+
   /**
    * Dados de um cliente ou null.
    * @type {Client | null}
    */
   public dataClient = input<Client | null>(null);
+
   /**
    * Modo do formulário
    */
   public mode = input<string>('');
+
   /**
    * Formulário para cadastro ou edição de cliente.
    */
@@ -58,8 +61,9 @@ export class ClientFormComponent implements OnInit {
       [Validators.required, Validators.pattern(/^\d{11}$/)],
       [this.cpfUnicoValidator()],
     ],
-    telefone: ['', [Validators.required]],
+    telefone: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
   });
+
   /**
    * Se o mode do formulário for EDIT desabilita o input do cpf
    */
@@ -70,19 +74,21 @@ export class ClientFormComponent implements OnInit {
         : this.formClient.get('cpf')?.enable();
     });
   }
+
   /**
    * Se houver dados de cliente, preenche o formulário com esses dados.
    */
   ngOnInit() {
-    console.log(this.mode());
     if (this.dataClient()) this.patchValue();
   }
+
   /**
    * Preenche o formulário com os dados do cliente recebidos via input.
    */
   patchValue() {
     this.formClient.patchValue(this.dataClient()!);
   }
+
   /**
    * Validador assíncrono que verifica se o CPF já existe na base de dados.
    * @returns {AsyncValidatorFn} Função de validação assíncrona.

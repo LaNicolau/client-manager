@@ -1,4 +1,11 @@
 <header>
   <img src="assets/thumbnail.png" />
   <h3>Case | Front-End Pleno</h3>
+
+  @if(userLogged()){
+  <button class="button-menu" (click)="logout()">
+    Sair
+    <mat-icon>logout</mat-icon>
+  </button>
+  }
 </header>
