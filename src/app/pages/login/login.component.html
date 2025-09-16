@@ -1,8 +1,6 @@
-<section class="login">
-  <h1 class="login__title">Entre com sua conta</h1>
-  <div class="form">
-    <app-authentication-form />
-    <button mat-raised-button color="primary" (click)="login()">Entrar</button>
-  </div>
-  <p>Não tem conta? <a routerLink="register">Cadastre-se</a></p>
-</section>
+<app-auth-wrapper
+  title="Entre com sua conta"
+  type="login"
+  (loginEmit)="login($event)"
+>
+</app-auth-wrapper>

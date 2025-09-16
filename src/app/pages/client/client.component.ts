@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ClientService } from '../../services/client/client.service';
 import { Client } from '../../interfaces/client.interface';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -11,6 +11,7 @@ import { ClientModalComponent } from './components/client-modal/client-modal.com
 import { DatePipe } from '@angular/common';
 import { FormattedCpfPipe } from '../../pipes/formatted-cpf/formatted-cpf.pipe';
 import { FormattedPhonePipe } from '../../pipes/formatted-phone/formatted-phone.pipe';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-client',
@@ -27,7 +28,7 @@ import { FormattedPhonePipe } from '../../pipes/formatted-phone/formatted-phone.
   templateUrl: './client.component.html',
   styleUrl: './client.component.scss',
 })
-export class ClientComponent implements OnInit {
+export class ClientComponent implements OnInit, OnDestroy {
   private _client = inject(ClientService);
   private _dialog = inject(MatDialog);
 
@@ -49,6 +50,7 @@ export class ClientComponent implements OnInit {
    * @type {MatTableDataSource<Client>}
    */
   dataSource!: MatTableDataSource<Client>;
+  private _destroy$ = new Subject<void>();
 
   /**
    * Inicializa a tabela carregando os clientes.
@@ -58,12 +60,23 @@ export class ClientComponent implements OnInit {
   }
 
   /**
+   * Encerra todas as subscriptions ativas para evitar vazamentos de memória.
+   */
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
+  /**
    * Busca todos os clientes da API e atualiza a fonte de dados da tabela.
    */
   getClients() {
-    this._client.getAll().subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
-    });
+    this._client
+      .getAll()
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((data) => {
+        this.dataSource = new MatTableDataSource(data);
+      });
   }
 
   /**
@@ -71,10 +84,12 @@ export class ClientComponent implements OnInit {
    * @param {number} id - O ID do cliente a ser excluído.
    */
   deleteClient(id: number) {
-    this._client.delete(id).subscribe(() => {
-      alert('Excluído com sucesso');
-      this.getClients();
-    });
+    this._client
+      .delete(id)
+      .subscribe(() => {
+        alert('Excluído com sucesso');
+        this.getClients();
+      });
   }
 
   /**

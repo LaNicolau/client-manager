@@ -59,7 +59,6 @@ export class ClientFormComponent implements OnInit {
     cpf: [
       '',
       [Validators.required, Validators.pattern(/^\d{11}$/)],
-      [this.cpfUnicoValidator()],
     ],
     telefone: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
   });
@@ -87,23 +86,5 @@ export class ClientFormComponent implements OnInit {
    */
   patchValue() {
     this.formClient.patchValue(this.dataClient()!);
-  }
-
-  /**
-   * Validador assíncrono que verifica se o CPF já existe na base de dados.
-   * @returns {AsyncValidatorFn} Função de validação assíncrona.
-   */
-  cpfUnicoValidator(): AsyncValidatorFn {
-    return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      const cpf = control.value;
-
-      return this._client
-        .getAll()
-        .pipe(
-          map((clients) =>
-            clients.some((c) => c.cpf === cpf) ? { cpfExistente: true } : null
-          )
-        );
-    };
   }
 }

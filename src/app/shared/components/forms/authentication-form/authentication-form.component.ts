@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -23,6 +23,8 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class AuthenticationFormComponent {
   private _fb = inject(FormBuilder);
+
+  public type = input<string>('');
 
   /**
    * Formulário para cadastro ou login do usuário.

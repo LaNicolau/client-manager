@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-header',

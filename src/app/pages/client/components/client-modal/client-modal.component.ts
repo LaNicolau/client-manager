@@ -41,29 +41,40 @@ export class ClientModalComponent {
   ) {}
 
   /**
-   * Salva os dados do formulário.
-   * Se o formulário for válido, realiza a operação de cadastro ou atualização
-   * conforme o modo definido ('ADD' ou outro).
-   * Exibe alertas de sucesso e fecha o modal após a operação.
-   * Caso o formulário seja inválido, marca todos os campos como tocados.
+   * Salva os dados do formulário de cliente.
+   * Este método verifica se o formulário é válido e, com base no modo (`ADD` ou `EDIT`),
+   * realiza a chamada apropriada para criar ou atualizar o cliente.
+   * - Se o modo for `'ADD'`, envia os dados via `POST` e trata o erro 409 como CPF duplicado.
+   * - Se o modo for `'EDIT'`, envia os dados via `PUT` com o ID do cliente.
+   *
+   * @returns {void}
    */
   saveForm() {
-    const data = this.clientFormComponent.formClient.value;
+    const form = this.clientFormComponent.formClient;
 
-    if (this.clientFormComponent.formClient.valid) {
+    if (form.valid) {
       if (this.data.mode === 'ADD') {
-        this._client.post(data).subscribe(() => {
-          alert('Cadastrado com sucesso');
-          this._dialog.closeAll();
+        this._client.post(form.value).subscribe({
+          next: () => {
+            alert('Cadastrado com sucesso');
+            this._dialog.closeAll();
+          },
+          error: (err) => {
+            if (err.status === 409) {
+              alert('Cpf já cadastrado');
+            } else {
+              alert('Erro inesperado');
+            }
+          },
         });
       } else {
-        this._client.put(this.data.dataClient.id, data).subscribe(() => {
+        this._client.put(this.data.dataClient.id, form.value).subscribe(() => {
           alert('Atualizado com sucesso');
           this._dialog.closeAll();
         });
       }
     } else {
-      this.clientFormComponent.formClient.markAllAsTouched();
+      form.markAllAsTouched();
     }
   }
 

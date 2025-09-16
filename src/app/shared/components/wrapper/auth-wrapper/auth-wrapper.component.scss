@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+
+  &__logo {
+    width: 130px;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    margin: 0 0 40px;
+  }
+
+  &__form {
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .button-back {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    color: black;
+  }
+}

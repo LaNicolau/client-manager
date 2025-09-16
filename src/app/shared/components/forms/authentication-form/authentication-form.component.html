@@ -1,7 +1,7 @@
 <div class="form" [formGroup]="formUser">
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input matInput formControlName="email" />
+    <input matInput formControlName="email" type="email"/>
     @if (email?.hasError('required')) {
     <mat-error>Campo obrigatório</mat-error>
     } @if (email?.hasError('email')) {
@@ -11,7 +11,7 @@
 
   <mat-form-field>
     <mat-label>Senha</mat-label>
-    <input matInput formControlName="password" />
+    <input matInput formControlName="password" type="password"/>
     @if (password?.hasError('required')) {
     <mat-error>Campo obrigatório</mat-error>
     }

@@ -1,0 +1,14 @@
+<header class="header">
+  @if(userLogged()){ <img class="header__logo" src="assets/thumbnail.png" />}
+  @else {
+  <h3 class="header__title">Bolt Energy</h3>
+  }
+  <h3 class="header__title">Case | Front-End Pleno</h3>
+
+  @if(userLogged()){
+  <button class="header__button" (click)="logout()">
+    Sair
+    <mat-icon>logout</mat-icon>
+  </button>
+  }
+</header>

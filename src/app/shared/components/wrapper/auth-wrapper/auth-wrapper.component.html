@@ -1,0 +1,18 @@
+<section class="wrapper">
+  @if(type() === 'register'){
+  <a routerLink="/" class="button-back"><mat-icon>arrow_back </mat-icon></a>
+  }
+
+  <img class="wrapper__logo" src="assets/thumbnail.png" />
+  <h1 class="wrapper__title">{{ title() }}</h1>
+  <div class="wrapper__form">
+    <app-authentication-form [type]="type()"/>
+    <button mat-raised-button color="primary" (click)="submitAuth()">
+      {{ type() === "login" ? "Entrar" : "Cadastrar" }}
+    </button>
+  </div>
+
+  @if(type() === 'login'){
+  <p>Não tem conta? <a routerLink="register">Cadastre-se</a></p>
+  }
+</section>
