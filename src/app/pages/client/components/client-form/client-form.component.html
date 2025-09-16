@@ -1,0 +1,49 @@
+<form [formGroup]="formClient">
+  <mat-form-field>
+    <mat-label>Nome</mat-label>
+    <input matInput formControlName="name" />
+    @if (formClient.get('name')?.hasError('required')) {
+    <mat-error>Campo obrigatório</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" />
+    @if (formClient.get('email')?.hasError('required')) {
+    <mat-error>Campo obrigatório</mat-error>
+    } @if (formClient.get('email')?.hasError('email')) {
+    <mat-error>Email inválido</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>CPF</mat-label>
+    <input
+      matInput
+      formControlName="cpf"
+      mask="000.000.000-00"
+      [dropSpecialCharacters]="true"
+    />
+    @if (formClient.get('cpf')?.hasError('required')) {
+    <mat-error>Campo obrigatório</mat-error>
+    } @if (formClient.get('cpf')?.hasError('pattern')) {
+    <mat-error>Deve ter 11 dígitos</mat-error>
+    } @if (formClient.get('cpf')?.hasError('cpfExistente')) {
+    <mat-error>CPF já cadastrado</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Telefone</mat-label>
+    <input
+      matInput
+      formControlName="telefone"
+      mask="(00) 00000-0000"
+      [dropSpecialCharacters]="true"
+    />
+    @if (formClient.get('telefone')?.hasError('required')) {
+    <mat-error>Campo obrigatório</mat-error>
+    }
+  </mat-form-field>
+</form>
