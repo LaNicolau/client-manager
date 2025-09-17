@@ -82,12 +82,9 @@ Acesse no navegador: http://localhost:4200
 
 ## 📌 Observações
 
-- O projeto está integrado com um banco de dados **PostgreSQL** hospedado na nuvem.  
-- Por esse motivo, a **primeira requisição** após um período de inatividade pode demorar um pouco, pois o banco "adormece" para economizar recursos.  
-- Após essa primeira chamada, as requisições seguintes são processadas normalmente e com maior rapidez.
+- O projeto está integrado com um banco de dados **PostgreSQL** hospedado na nuvem. Por esse motivo, a **primeira requisição** após um período de inatividade pode demorar um pouco, pois o banco "adormece" para economizar recursos. Após essa primeira chamada, as requisições seguintes são processadas normalmente e com maior rapidez.
 
-- A autenticação foi implementada como plus, garantindo proteção de rotas e login seguro.
-- Atualmente, todos os usuários logados conseguem visualizar os clientes cadastrados no sistema (não foi feita separação de dados por usuário).
+- A autenticação foi implementada como plus, garantindo proteção de rotas e login seguro. Atualmente, todos os usuários logados conseguem visualizar os clientes cadastrados no sistema (não foi feita separação de dados por usuário).
 
 ## ✨ Possíveis Melhorias Futuras
 
