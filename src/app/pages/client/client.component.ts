@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { FormattedCpfPipe } from '../../pipes/formatted-cpf/formatted-cpf.pipe';
 import { FormattedPhonePipe } from '../../pipes/formatted-phone/formatted-phone.pipe';
 import { Subject, takeUntil } from 'rxjs';
+import { LoadingService } from '../../services/loading/loading.service';
 
 @Component({
   selector: 'app-client',
@@ -30,6 +31,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class ClientComponent implements OnInit, OnDestroy {
   private _client = inject(ClientService);
+  private _loading = inject(LoadingService);
   private _dialog = inject(MatDialog);
 
   /**
@@ -66,37 +68,39 @@ export class ClientComponent implements OnInit, OnDestroy {
     this._destroy$.next();
     this._destroy$.complete();
   }
-
   /**
    * Busca todos os clientes da API e atualiza a fonte de dados da tabela.
+   * Exibe o estado de loading durante a operação.
    */
   getClients() {
+    this._loading.setLoading(true);
     this._client
       .getAll()
       .pipe(takeUntil(this._destroy$))
       .subscribe((data) => {
+        this._loading.setLoading(false);
         this.dataSource = new MatTableDataSource(data);
       });
   }
 
   /**
    * Exclui um cliente pelo ID e atualiza a lista após a exclusão.
-   * @param {number} id - O ID do cliente a ser excluído.
+   * Exibe uma mensagem de sucesso e atualiza a tabela.
+   * @param {number} id - ID do cliente a ser excluído.
    */
   deleteClient(id: number) {
-    this._client
-      .delete(id)
-      .subscribe(() => {
-        alert('Excluído com sucesso');
-        this.getClients();
-      });
+    this._loading.setLoading(true);
+    this._client.delete(id).subscribe(() => {
+      this._loading.setLoading(false);
+      alert('Excluído com sucesso');
+      this.getClients();
+    });
   }
 
   /**
    * Abre o modal para adicionar ou editar um cliente.
-   * Após o fechamento do modal, atualiza a lista de clientes.
-   *
-   * @param {Client} [dataClient] - Dados do cliente a serem editados (opcional).
+   * Após o fechamento do modal, atualiza a lista de clientes se necessário.
+   * @param {Client} [dataClient] - Dados do cliente para edição (opcional).
    * @param {string} [mode='ADD'] - Modo de operação do modal ('ADD' ou 'EDIT').
    */
   openDialog(dataClient?: Client, mode: string = 'ADD') {
@@ -107,6 +111,8 @@ export class ClientComponent implements OnInit, OnDestroy {
         width: '600px',
       })
       .afterClosed()
-      .subscribe(() => this.getClients());
+      .subscribe((shouldRefresh) => {
+        if (shouldRefresh) this.getClients();
+      });
   }
 }

@@ -3,13 +3,15 @@ import {
   MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogContent,
+  MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { ClientFormComponent } from '../client-form/client-form.component';
 import { ClientService } from '../../../../services/client/client.service';
-import { Dialog } from '@angular/cdk/dialog';
 import { Client } from '../../../../interfaces/client.interface';
 import { MatButtonModule } from '@angular/material/button';
+import { LoadingService } from '../../../../services/loading/loading.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-client-modal',
@@ -25,7 +27,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class ClientModalComponent {
   private _client = inject(ClientService);
-  private _dialog = inject(Dialog);
+  private _loading = inject(LoadingService);
 
   /**
    * Referência ao componente de formulário de cliente dentro do modal.
@@ -37,40 +39,45 @@ export class ClientModalComponent {
    * @param {{ dataClient: Client; mode: string }} data - Dados passados para o modal.
    */
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { dataClient: Client; mode: string }
+    @Inject(MAT_DIALOG_DATA) public data: { dataClient: Client; mode: string },
+    private _dialogRef: MatDialogRef<ClientModalComponent>
   ) {}
 
   /**
    * Salva os dados do formulário de cliente.
-   * Este método verifica se o formulário é válido e, com base no modo (`ADD` ou `EDIT`),
+   * Verifica se o formulário é válido e, com base no modo de operação (`ADD` ou `EDIT`),
    * realiza a chamada apropriada para criar ou atualizar o cliente.
-   * - Se o modo for `'ADD'`, envia os dados via `POST` e trata o erro 409 como CPF duplicado.
-   * - Se o modo for `'EDIT'`, envia os dados via `PUT` com o ID do cliente.
-   *
-   * @returns {void}
+   * - Modo `'ADD'`: envia os dados via `POST` e trata o erro 409 como CPF duplicado.
+   * - Modo `'EDIT'`: envia os dados via `PUT` com o ID do cliente.
+   * Exibe mensagens de sucesso ou erro e fecha o modal após operação bem-sucedida.
    */
   saveForm() {
     const form = this.clientFormComponent.formClient;
 
     if (form.valid) {
+      this._loading.setLoading(true);
       if (this.data.mode === 'ADD') {
-        this._client.post(form.value).subscribe({
-          next: () => {
-            alert('Cadastrado com sucesso');
-            this._dialog.closeAll();
-          },
-          error: (err) => {
-            if (err.status === 409) {
-              alert('Cpf já cadastrado');
-            } else {
-              alert('Erro inesperado');
-            }
-          },
-        });
+        this._client
+          .post(form.value)
+          .pipe(finalize(() => this._loading.setLoading(false)))
+          .subscribe({
+            next: () => {
+              alert('Cadastrado com sucesso');
+              this._dialogRef.close(true);
+            },
+            error: (err) => {
+              if (err.status === 409) {
+                alert('Cpf já cadastrado');
+              } else {
+                alert('Erro inesperado');
+              }
+            },
+          });
       } else {
         this._client.put(this.data.dataClient.id, form.value).subscribe(() => {
+          this._loading.setLoading(false);
           alert('Atualizado com sucesso');
-          this._dialog.closeAll();
+          this._dialogRef.close(true);
         });
       }
     } else {
@@ -79,15 +86,15 @@ export class ClientModalComponent {
   }
 
   /**
-   * Fecha o formulário.
+   * Fecha o formulário de cliente.
    * Se houver alterações não salvas, solicita confirmação do usuário antes de fechar.
    * Caso contrário, fecha o modal diretamente.
    */
   closeForm() {
     if (this.clientFormComponent.formClient.dirty) {
-      if (confirm('Sair sem salvar mudanças?')) this._dialog.closeAll();
+      if (confirm('Sair sem salvar mudanças?')) this._dialogRef.close(false);
     } else {
-      this._dialog.closeAll();
+      this._dialogRef.close(false);
     }
   }
 }

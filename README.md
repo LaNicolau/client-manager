@@ -1,59 +1,95 @@
-# ClientManager
+# 📌 Projeto de Gerenciamento de Clientes
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+Este projeto foi desenvolvido como parte de um case técnico, com o objetivo de implementar autenticação de usuários e um CRUD de clientes utilizando **Angular** e **Node.js (NestJS/Express)**.
 
-## Development server
+## 🚀 Funcionalidades
 
-To start a local development server, run:
+- Cadastro e login de usuários com **autenticação via token (JWT)**  
+- Proteção de rotas com **AuthGuard**  
+- CRUD de clientes:
+  - Criar cliente
+  - Listar clientes
+  - Editar cliente
+  - Excluir cliente  
+- Formulários com validação (Angular Reactive Forms + Angular Material)  
+- Máscaras para CPF e telefone  
+- Estrutura modular e reutilizável no frontend  
 
-```bash
+## 🛠️ Tecnologias Utilizadas
+
+- Angular 19
+- Angular Material
+- Reactive Forms
+- RxJS
+- Signals
+- ngx-mask
+
+## 📂 Estrutura do Projeto
+
+src
+├── app
+│   ├── app.component.*         # Componente raiz
+│   ├── app.config.ts           # Configuração do app
+│   ├── app.routes.ts           # Rotas principais
+│   │
+│   ├── guards                  # Guards para proteção de rotas
+│   │   ├── auth                # Protege rotas autenticadas
+│   │   └── login               # Evita acesso à tela de login já autenticado
+│   │
+│   ├── interceptors            # Interceptor HTTP para JWT
+│   │   └── auth.interceptor.ts
+│   │
+│   ├── interfaces              # Interfaces de tipagem
+│   │   ├── client.interface.ts
+│   │   └── user.interface.ts
+│   │
+│   ├── pages                   # Páginas principais
+│   │   ├── client              # Listagem e gestão de clientes
+│   │   ├── login               # Tela de login
+│   │   └── register            # Tela de cadastro
+│   │
+│   ├── pipes                   # Pipes customizados
+│   │   ├── formatted-cpf
+│   │   └── formatted-phone
+│   │
+│   ├── services                # Serviços
+│   │   ├── auth                # Autenticação
+│   │   ├── client              # Gestão de clientes
+│   │   └── loading             # Spinner de carregamento
+│   │
+│   └── shared/components       # Componentes compartilhados
+│       ├── forms/authentication-form
+│       ├── header
+│       ├── loading-spinner-component
+│       └── wrapper/auth-wrapper
+│
+├── assets                      # Imagens e recursos estáticos
+└── environments                # Variáveis de ambiente
+
+## ▶️ Como Rodar o Projeto
+1. Clonar o repositório
+git clone https://github.com/seu-usuario/seu-repo.git
+cd seu-repo
+
+2. Instalar dependências
+npm install
+
+3. Rodar em ambiente de desenvolvimento
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Acesse no navegador: http://localhost:4200
 
-## Code scaffolding
+## 📌 Observações
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- O projeto está integrado com um banco de dados **PostgreSQL** hospedado na nuvem.  
+- Por esse motivo, a **primeira requisição** após um período de inatividade pode demorar um pouco, pois o banco "adormece" para economizar recursos.  
+- Após essa primeira chamada, as requisições seguintes são processadas normalmente e com maior rapidez.
 
-```bash
-ng generate component component-name
-```
+- A autenticação foi implementada como plus, garantindo proteção de rotas e login seguro.
+- Atualmente, todos os usuários logados conseguem visualizar os clientes cadastrados no sistema (não foi feita separação de dados por usuário).
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## ✨ Possíveis Melhorias Futuras
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Separar os dados por usuário (cada conta ver apenas seus clientes).
+Implementar refresh token.
+Adicionar paginação e filtros na listagem de clientes.

@@ -3,6 +3,8 @@ import { AccessUserService } from '../../services/access-user/access-user.servic
 import { Router } from '@angular/router';
 import { AuthWrapperComponent } from '../../shared/components/wrapper/auth-wrapper/auth-wrapper.component';
 import { User } from '../../interfaces/user.interface';
+import { LoadingService } from '../../services/loading/loading.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -11,8 +13,9 @@ import { User } from '../../interfaces/user.interface';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
-  private _router = inject(Router);
+  private _loading = inject(LoadingService);
   private _accessUser = inject(AccessUserService);
+  private _router = inject(Router);
 
   /**
    * Realiza o cadastro do usuário com os dados recebidos do formulário.
@@ -20,17 +23,21 @@ export class RegisterComponent {
    * @param data - Objeto contendo os dados do usuário, como `email` e `password`.
    */
   register(data: User) {
-    this._accessUser.post(data).subscribe({
-      next: () => {
-        alert('Usuário cadastrado'), this._router.navigate(['']);
-      },
-      error: (err) => {
-        if (err.status === 409) {
-          alert('Email já cadastrado');
-        } else {
-          alert('Erro inesperado');
-        }
-      },
-    });
+    this._loading.setLoading(true);
+    this._accessUser
+      .post(data)
+      .pipe(finalize(() => this._loading.setLoading(false)))
+      .subscribe({
+        next: () => {
+          alert('Usuário cadastrado'), this._router.navigate(['']);
+        },
+        error: (err) => {
+          if (err.status === 409) {
+            alert('Email já cadastrado');
+          } else {
+            alert('Erro inesperado');
+          }
+        },
+      });
   }
 }

@@ -1,4 +1,7 @@
 <main>
+  @if(hasLoading()){
+  <app-loading-spinner-component></app-loading-spinner-component>
+  }
   <app-header></app-header>
   <div class="content">
     <router-outlet></router-outlet>
