@@ -5,4 +5,11 @@ describe('FormattedCpfPipe', () => {
     const pipe = new FormattedCpfPipe();
     expect(pipe).toBeTruthy();
   });
+
+  it('deve formatar um CPF completo corretamente', () => {
+    const pipe = new FormattedCpfPipe();
+    const result = pipe.transform('12345678911');
+
+    expect(result).toBe('123.456.789-11');
+  });
 });

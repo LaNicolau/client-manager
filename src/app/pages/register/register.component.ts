@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AccessUserService } from '../../services/access-user/access-user.service';
 import { Router } from '@angular/router';
 import { AuthWrapperComponent } from '../../shared/components/wrapper/auth-wrapper/auth-wrapper.component';

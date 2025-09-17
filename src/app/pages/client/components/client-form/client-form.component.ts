@@ -3,24 +3,18 @@ import {
   effect,
   inject,
   input,
-  OnChanges,
   OnInit,
 } from '@angular/core';
 import {
-  AbstractControl,
-  AsyncValidatorFn,
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { MatFormField, MatInputModule } from '@angular/material/input';
 import { Client } from '../../../../interfaces/client.interface';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-import { ClientService } from '../../../../services/client/client.service';
-import { Observable, of, map } from 'rxjs';
 
 @Component({
   selector: 'app-client-form',
@@ -37,7 +31,6 @@ import { Observable, of, map } from 'rxjs';
 })
 export class ClientFormComponent implements OnInit {
   private _fb = inject(FormBuilder);
-  private _client = inject(ClientService);
 
   /**
    * Dados de um cliente ou null.

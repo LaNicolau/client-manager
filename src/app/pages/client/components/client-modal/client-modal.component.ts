@@ -90,7 +90,7 @@ export class ClientModalComponent {
    * Se houver alterações não salvas, solicita confirmação do usuário antes de fechar.
    * Caso contrário, fecha o modal diretamente.
    */
-  closeForm() {
+  closeModal() {
     if (this.clientFormComponent.formClient.dirty) {
       if (confirm('Sair sem salvar mudanças?')) this._dialogRef.close(false);
     } else {

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Client } from '../../interfaces/client.interface';
 import { User } from '../../interfaces/user.interface';
 import { Router } from '@angular/router';
 

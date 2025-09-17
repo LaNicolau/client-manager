@@ -13,4 +13,9 @@ describe('LoadingService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('deve setar o valor do signal hasLoading através do método setLoading', () => {
+    service.setLoading(true);
+    expect(service.hasLoading()).toBe(true);
+  });
 });
