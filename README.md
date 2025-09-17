@@ -70,8 +70,7 @@ src
 
 ## ▶️ Como Rodar o Projeto
 1. Clonar o repositório
-git clone https://github.com/seu-usuario/seu-repo.git
-cd seu-repo
+git clone https://github.com/LaNicolau/client-manager.git
 
 2. Instalar dependências
 npm install
