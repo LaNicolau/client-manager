@@ -8,7 +8,6 @@ import { catchError, throwError } from 'rxjs';
  * e tratar erros de autenticação.
  * - Se o usuário estiver logado, adiciona o cabeçalho `Authorization` com o token JWT.
  * - Se a resposta da API for 401 (Unauthorized), realiza o logout automaticamente.
- * @returns {Observable<HttpEvent<any>>} Requisição modificada (se aplicável) ou erro tratado.
  */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);

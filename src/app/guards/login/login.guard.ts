@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+
 /**
  * Guard que impede o acesso à rota de login caso o usuário já esteja autenticado.
  * Se o usuário estiver logado, redireciona para a rota '/client'.

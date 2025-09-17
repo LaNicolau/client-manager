@@ -4,6 +4,7 @@ import { Injectable, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class LoadingService {
+
   /**
    * Signal que indica se o sistema está em estado de loading.
    */

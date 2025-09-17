@@ -1,6 +1,7 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { inject } from '@angular/core';
+
 /**
  * Guard de autenticação que protege rotas restritas.
  * Verifica se o usuário está autenticado

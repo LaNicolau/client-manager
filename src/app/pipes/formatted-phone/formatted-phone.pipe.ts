@@ -3,6 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'formattedPhone',
 })
+
 /**
  * Pipe que formata uma string numérica como número de telefone brasileiro.
  * Exemplo: '21987654321' → '(21) 98765-4321'

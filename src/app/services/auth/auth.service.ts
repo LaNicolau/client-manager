@@ -12,6 +12,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
   private API_URL = environment.API_URL;
+
   /**
    * Signal que representa o estado de autenticação do usuário.
    * `true` se o token estiver presente no localStorage, `false` caso contrário.
@@ -21,7 +22,7 @@ export class AuthService {
   /**
    * Realiza o login do usuário enviando os dados para a API.
    * Ao receber o token, salva no localStorage e atualiza o sinal `isLogged`.
-   * @param {User} data - Dados do usuário (email, senha, etc.).
+   * @param {User} data - Dados do usuário (email, senha).
    * @returns {Observable<{ access_token: string }>} Observable com o token de acesso.
    */
   post = (data: User): Observable<{ access_token: string }> => {

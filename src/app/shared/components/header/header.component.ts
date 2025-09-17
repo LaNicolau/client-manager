@@ -12,7 +12,7 @@ export class HeaderComponent {
   private _auth = inject(AuthService);
 
   /**
-   * Signaç que representa se o usuário está logado.
+   * Signal que representa se o usuário está logado.
    * Atualiza automaticamente com base no estado reativo do `AuthService`.
    */
   public userLogged = computed(() => this._auth.isLogged());

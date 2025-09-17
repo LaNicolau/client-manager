@@ -68,6 +68,7 @@ export class ClientComponent implements OnInit, OnDestroy {
     this._destroy$.next();
     this._destroy$.complete();
   }
+
   /**
    * Busca todos os clientes da API e atualiza a fonte de dados da tabela.
    * Exibe o estado de loading durante a operação.

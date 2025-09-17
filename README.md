@@ -1,6 +1,6 @@
 # 📌 Projeto de Gerenciamento de Clientes
 
-Este projeto foi desenvolvido como parte de um case técnico, com o objetivo de implementar autenticação de usuários e um CRUD de clientes utilizando **Angular** e **Node.js (NestJS/Express)**.
+Este projeto foi desenvolvido como parte de um case técnico, com o objetivo de implementar autenticação de usuários e um CRUD de clientes utilizando **Angular**
 
 ## 🚀 Funcionalidades
 
@@ -17,12 +17,12 @@ Este projeto foi desenvolvido como parte de um case técnico, com o objetivo de 
 
 ## 🛠️ Tecnologias Utilizadas
 
-- Angular 19
-- Angular Material
-- Reactive Forms
-- RxJS
-- Signals
-- ngx-mask
+- Angular 19 – framework principal
+- Angular Material – biblioteca de componentes UI
+- Reactive Forms – para formulários reativos e validação
+- RxJS – para programação reativa
+- Signals – gerenciamento de estado reativo do Angular
+- ngx-mask – para máscaras de input (CPF, telefone, etc.)
 
 ## 📂 Estrutura do Projeto
 
@@ -67,8 +67,12 @@ src
 ├── assets                      # Imagens e recursos estáticos
 └── environments                # Variáveis de ambiente
 ```
+## 🧪 Cobertura de Testes
+
+A cobertura de testes atual do projeto é de 80%. 
 
 ## ▶️ Como Rodar o Projeto
+
 1. Clonar o repositório
 git clone https://github.com/LaNicolau/client-manager.git
 
@@ -84,10 +88,7 @@ Acesse no navegador: http://localhost:4200
 
 - O projeto está integrado com um banco de dados **PostgreSQL** hospedado na nuvem. Por esse motivo, a **primeira requisição** após um período de inatividade pode demorar um pouco, pois o banco "adormece" para economizar recursos. Após essa primeira chamada, as requisições seguintes são processadas normalmente e com maior rapidez.
 
-- A autenticação foi implementada como plus, garantindo proteção de rotas e login seguro. Atualmente, todos os usuários logados conseguem visualizar os clientes cadastrados no sistema (não foi feita separação de dados por usuário).
-
 ## ✨ Possíveis Melhorias Futuras
 
-Separar os dados por usuário (cada conta ver apenas seus clientes).
 Implementar refresh token.
 Adicionar paginação e filtros na listagem de clientes.

@@ -3,6 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'formattedCpf',
 })
+
 /**
  * Pipe que formata uma string numérica como CPF brasileiro.
  * Exemplo: '12345678901' → '123.456.789-01'

@@ -53,7 +53,6 @@ export class ClientModalComponent {
    */
   saveForm() {
     const form = this.clientFormComponent.formClient;
-
     if (form.valid) {
       this._loading.setLoading(true);
       if (this.data.mode === 'ADD') {
