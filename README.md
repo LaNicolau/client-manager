@@ -26,6 +26,7 @@ Este projeto foi desenvolvido como parte de um case técnico, com o objetivo de 
 
 ## 📂 Estrutura do Projeto
 
+```bash
 src
 ├── app
 │   ├── app.component.*         # Componente raiz
@@ -65,6 +66,7 @@ src
 │
 ├── assets                      # Imagens e recursos estáticos
 └── environments                # Variáveis de ambiente
+```
 
 ## ▶️ Como Rodar o Projeto
 1. Clonar o repositório
